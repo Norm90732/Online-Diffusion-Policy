@@ -9,3 +9,5 @@ I decided that joint training is better, but the ratio needs to be controlled an
 
 Decoupled Isaac Sim Environments -> Inference of Trainable World Model (weights reloaded periodically with new checkpoints) + correct data -> Ray Data -> Training Video World Model -> update world model in inference pipeline. 
 
+current idea
+![Online Diffusion Architecture](pipelineOnlineDiffusion.png)
