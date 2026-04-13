@@ -1,0 +1,6 @@
+setup_env.sh
+isaac-sim_5.0.0.sif
+.isaac-cache/*
+pyproject.toml
+settings.json
+.pyreflyignore

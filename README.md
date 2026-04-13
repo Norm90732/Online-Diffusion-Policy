@@ -1,13 +1,41 @@
 # Online-Diffusion-Policy
 
-Rough idea that I want to prototype using Video World Models 
+An online diffusion policy based on Cosmos Policy. 
 
-First training the value of the model with simulator data (mix of working and false data) -> progressively train the world model + value --> pivot to training action policy.  Using a mix of actual model inference failues live and correct samples. 
+Things to Test 
 
-I decided that joint training is better, but the ratio needs to be controlled and progressively allocated during training, a lot of data mixture that needs to be controlled, but i think i can just make an actor that monitors progress during training to do this for me. 
-
-
-Decoupled Isaac Sim Environments -> Inference of Trainable World Model (weights reloaded periodically with new checkpoints) + correct data -> Ray Data -> Training Video World Model -> update world model in inference pipeline. 
-
-current idea
+-Current and Previous States In Latent Sequence
+-AppendingPredicted Future State for Next Step Generation In Training 
 ![Online Diffusion Architecture](pipelineOnlineDiffusion.png)
+
+### Installation
+
+```bash
+### 1. Create the Conda Environment
+conda env create -f environment.yml
+conda activate onlineDiffusionPolicy
+
+### 2. Install Python Dependencies
+
+pip install -r requirements.txt
+
+### 3. Install Cosmos Predict 2.5
+
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+# Clone and install cosmos-predict2.5
+git clone https://github.com/nvidia-cosmos/cosmos-predict2.5.git
+cd cosmos-predict2.5
+git lfs install
+git lfs pull
+uv sync --extra=cu128 --active --inexact
+cd ..
+
+cd cosmos-predict2.5
+pip install -e . --no-deps
+
+#include .sh later
+#isaac sim compiles and runs test so far. 
+```
