@@ -5,7 +5,7 @@ An online diffusion policy based on Cosmos Policy.
 Things to Test 
 
 -Current and Previous States In Latent Sequence
--AppendingPredicted Future State for Next Step Generation In Training 
+
 ![Online Diffusion Architecture](pipelineOnlineDiffusion.png)
 
 ### Installation
