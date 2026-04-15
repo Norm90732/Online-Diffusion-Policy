@@ -4,3 +4,5 @@ isaac-sim_5.0.0.sif
 pyproject.toml
 settings.json
 .pyreflyignore
+isaac-sim.zip
+isaacsim/*
