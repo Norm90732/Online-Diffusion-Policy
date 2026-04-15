@@ -6,3 +6,6 @@ settings.json
 .pyreflyignore
 isaac-sim.zip
 isaacsim/*
+.pyrefly.toml
+.vscode/
+cosmos-predict2.5/*

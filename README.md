@@ -36,11 +36,4 @@ cd ..
 cd cosmos-predict2.5
 pip install -e . --no-deps
 
-# install isaac lab 
-git clone https://github.com/isaac-sim/IsaacLab.git
-cd IsaacLab
-./isaaclab.sh --conda onlineDiffusionPolicy
-./isaaclab.sh --install none
-cd ..
-
 ```

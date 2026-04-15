@@ -23,3 +23,6 @@ tqdm
 torch-ema
 accelerate
 sentencepiece
+mani-skill
+
+
