@@ -5,8 +5,13 @@ baseEnvironment:
   numEnvironments: 512
   obsMode: "rgbd"
   rewardType: "dense"
+  renderMode: "rgb_array"
+  simBackend: "gpu"
+  sensorSize: 
+    height: 224
+    width: 224
 
-
+timeHorizon: 32 
 
 envs:
   - LiftPegUpright-v1
