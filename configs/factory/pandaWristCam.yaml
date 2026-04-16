@@ -1,0 +1,22 @@
+robotType: "panda_wristcam" 
+replaySaveDir: "/home/normansmith/blue_storage/projects/Online-Diffusion-Policy/data"
+
+baseEnvironment:
+  obsMode: "rgbd"
+  rewardType: "dense"
+
+
+
+envs:
+  - LiftPegUpright-v1
+  - PegInsertionSide-v1
+  - PickCube-v1
+  - PlugCharger-v1
+  - PokeCube-v1
+  - PullCube-v1
+  - PullCubeTool-v1
+  - PushCube-v1
+  - PushT-v1
+  - RollBall-v1
+  - StackCube-v1
+  - StackPyramid-v1
