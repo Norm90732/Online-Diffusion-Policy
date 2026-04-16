@@ -2,6 +2,7 @@ robotType: "panda_wristcam"
 replaySaveDir: "/home/normansmith/blue_storage/projects/Online-Diffusion-Policy/data"
 
 baseEnvironment:
+  numEnvironments: 512
   obsMode: "rgbd"
   rewardType: "dense"
 
