@@ -4,6 +4,7 @@ import gymnasium as gym
 import mani_skill.trajectory.utils as trajectory_utils
 import h5py
 import json 
+from cosmos_predict2
 import numpy as np 
 import ray  
 from ray.util.queue import Queue, Full 

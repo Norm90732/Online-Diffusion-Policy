@@ -28,3 +28,7 @@ nohup.out
 *.bin
 wandb/
 core.store*
+test.py 
+*.def
+*.sif
+*.sh
