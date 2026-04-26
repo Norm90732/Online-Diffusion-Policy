@@ -13,6 +13,12 @@ baseEnvironment:
 
 timeHorizon: 32 
 
+noiseStats: 
+  distribution: "logitNormal"
+  shift: 0.2
+  mean: 0
+  std: 0.05
+  
 envs:
   - LiftPegUpright-v1
   - PegInsertionSide-v1

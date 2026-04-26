@@ -1,4 +1,5 @@
 from omegaconf import DictConfig
+import torch 
 import gymnasium as gym 
 import mani_skill.trajectory.utils as trajectory_utils
 import h5py
@@ -6,15 +7,36 @@ import json
 import numpy as np 
 import ray  
 from ray.util.queue import Queue, Full 
-from ray.util.metrics import Histogram
+from ray.util.metrics import Histogram, Counter
+from ray.experimental.collective import create_collective_group
+#https://docs.ray.io/en/latest/ray-core/api/direct-transport.html 
 
 #returns h5, json for reading in syntehtic worker 
 def savedTrajectoryParser(cfg:DictConfig) -> tuple[str,str]: 
     return ("s","s")
 
+class ActionNoise():
+    def __init__(self,cfg:DictConfig):
+        self.cfg = cfg.noiseStats
+    def sampleNoise(self,action):
+        if self.cfg.distribution == "gaussian":
+            z = torch.randn_like(action)
+            z = self.cfg.mean + (self.cfg.std * z)
+            return z 
+        
+        elif self.cfg.distribution == "logitNormal":
+            z = torch.randn_like(action)
+            z = self.cfg.mean + (self.cfg.std * z)
+            tSample = torch.sigmoid(z)
+            s = self.cfg.shift
+            shiftedNoise = (s * tSample) / (1.0 + (s - 1.0) * tSample)
+            
+            return shiftedNoise
+
+
 #https://maniskill.readthedocs.io/en/latest/user_guide/datasets/demos.html
 @ray.remote(num_cpus=1,
-            num_gpus=0.1,
+            num_gpus=0.05,
             )
 class SyntheticOfflineWorker():
     def __init__(self,cfg:DictConfig,taskName:str,savedReplayDir:tuple[str,str]):
@@ -28,9 +50,13 @@ class SyntheticOfflineWorker():
         self.simBackend = cfg.factory.baseEnvironment.simBackend
         self.sensorSize = cfg.factory.baseEnvironment.sensorSize
         self.timeHorizon = cfg.factory.timeHorizon
-        
+                
+        self.distributution = ActionNoise(cfg)
+
+        self.env = None 
         
         self.jsonData = self._loadJSON()
+        self.episodes = self.jsonData["episodes"]
         
     def _loadHDF5(self,episodeId):
         with h5py.File(self.hdf5File,"r") as f:
@@ -53,8 +79,8 @@ class SyntheticOfflineWorker():
                 currentDict["success"] = traj["success"][:]
             if traj.get("fail") is not None:
                 currentDict["fail"] = traj["fail"][:]
-            if traj.get("obs") is not None:
-                currentDict["obs"] = traj["obs"][:]
+            if traj.get("obs") is not None: 
+                currentDict["obs"] = traj["obs"][:] 
 
             return currentDict
            
@@ -94,18 +120,18 @@ class SyntheticOfflineWorker():
     def resetEnv(self, seed: int | None = None):
         if self.env is None:
             self._buildEnv()
-        obs, info = self.env.reset(seed=seed)
+        obs, info = self.env.reset(seed=seed) #pyrefly: ignore 
         return obs, info
 
     def stepEnv(self, actionBatch):
         if self.env is None:
-            self._buildEnv()
-            self.env.reset()
-        return self.env.step(actionBatch)
+            self._buildEnv() 
+            self.env.reset()#pyrefly:ignore 
+        return self.env.step(actionBatch) #pyrefly:ignore 
 
     def _sampleEpisodeIds(self):
         jsonData =self.jsonData
-        episodes = jsonData["episodes"]
+        episodes = self.episodes
         sampled = np.random.choice(len(episodes), size=self.numEnvs, replace=True)
         return [episodes[i]["episode_id"] for i in sampled]
 
@@ -144,6 +170,28 @@ class SyntheticOfflineWorker():
         return actionBatch, sampledMetaData
 
     #Generation Method 
+    def _restoreEnvStateBatch(self,sampledMetaData) -> None:
+        if self.env is None:
+            self._buildEnv() 
+            self.env.reset() #pyrefly:ignore 
+
+        stateList = [item["envState"] for item in sampledMetaData]
+        batchedState = trajectory_utils.list_of_dicts_to_dict(stateList)
+        self.env.set_state_dict(batchedState) #pyrefly:ignore 
+        return None 
+    
+    @ray.method(tensor_transport="nccl")
+    def generateSyntheticBatch(self):
+        actionBatch, sampledMetaData = self._sampleActionBatchFromTrajectories()
+        
+        self._restoreEnvStateBatch(sampledMetaData)
+        
+        
+        noisedActions = self.distributution.sampleNoise(actionBatch)
+        noisedActions = np.clip(noisedActions,-1.0,1.0) #pyrefly:ignore 
+        
+        nextObs, rewards, terminated, truncated, infos = self.stepEnv(noisedActions)
+        
     
     
     
