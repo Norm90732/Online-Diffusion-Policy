@@ -32,3 +32,7 @@ test.py
 *.def
 *.sif
 *.sh
+.vscode_stubs/*
+envInstall.md
+.container_pkgs/*
+.isaac_5_0_*

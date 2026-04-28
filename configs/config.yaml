@@ -1,5 +1,5 @@
 defaults:
-  - factory: pandaWristCam
+  - factory: g1Data
   - _self_
 
 cosmosRepoDir: "/home/normansmith/blue_storage/projects/Online-Diffusion-Policy/cosmos-predict2.5"
