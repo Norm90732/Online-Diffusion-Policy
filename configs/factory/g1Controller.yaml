@@ -1,0 +1,61 @@
+taskName:
+  - OpenFridge:
+      leftView:
+        cameraName: leftRefCamera
+        primPath: "{ENV_REGEX_NS}/LeftRefCamera"
+        parent: world
+        pos: [0.4025, -3.17108, 2.17161]
+        rot: [0.8515339222064106, 0.5223308121602998, -0.023734462768259162, -0.03869329461462389]
+        convention: world
+        focalLength: 20.0
+        focusDistance: 400.0
+        horizontalAperture: 20.955
+        clippingRange: [0.01, 50.0]
+        width: 480
+        height: 360
+        dataTypes: ["rgb"]
+
+      rightView:
+        cameraName: rightRefCamera
+        primPath: "{ENV_REGEX_NS}/RightRefCamera"
+        parent: world
+        pos: [1.96156, -1.30524, 1.79055]
+        rot: [0.6776324075313589, 0.4085554429140602, 0.3157213009512312, 0.5236571596155126]
+        convention: world
+        focalLength: 18.0
+        focusDistance: 400.0
+        horizontalAperture: 20.955
+        clippingRange: [0.01, 50.0]
+        width: 480
+        height: 360
+        dataTypes: ["rgb"]
+
+      leftHandView:
+        cameraName: leftHandCamera
+        primPath: "{ENV_REGEX_NS}/Robot/torso_link/left_hand_camera"
+        parent: torsoLink
+        pos: [0.10209156, 0.02857542, 0.42446595]
+        rot: [0.64367383, 0.26523914, -0.27106013, -0.66472446]
+        convention: opengl
+        focalLength: 24.0
+        focusDistance: 400.0
+        horizontalAperture: 62.0
+        clippingRange: [0.01, 50.0]
+        width: 480
+        height: 360
+        dataTypes: ["rgb"]
+
+      rightHandView:
+        cameraName: rightHandCamera
+        primPath: "{ENV_REGEX_NS}/Robot/torso_link/right_hand_camera"
+        parent: torsoLink
+        pos: [0.10209156, -0.04657542, 0.42446595]
+        rot: [0.64367383, 0.26523914, -0.27106013, -0.66472446]
+        convention: opengl
+        focalLength: 24.0
+        focusDistance: 400.0
+        horizontalAperture: 62.0
+        clippingRange: [0.01, 50.0]
+        width: 480
+        height: 360
+        dataTypes: ["rgb"]
