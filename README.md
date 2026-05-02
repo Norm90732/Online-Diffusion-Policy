@@ -10,8 +10,14 @@ Things to Test
 
 
 ## Data Generation
-![G1 Controller](assets/humanoidKitchen.png)
-*G1 Controller Robot.*
+![Fridge X7S](assets/humanoidFridge.png)
+*Open Fridge X7S.*
+
+
+![Sear Meat X7S](assets/humanoidSearMeat.png)
+*Sear Meat X7S.*
+![Waffle X7S](assets/humanoidWaffle.png)
+*Waffle X7S.*
 
 
 ### Installation

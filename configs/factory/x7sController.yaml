@@ -1,0 +1,51 @@
+taskName:
+  - OpenFridge
+
+camera:
+  chestView:
+    cameraName: chest_camera
+    primPath: "{ENV_REGEX_NS}/Robot/link1/chest_camera"
+    parent: link1
+    pos: [0.20, 0.04, 0.70]
+    rot: [0.68651149, 0.18464627, -0.20510806, -0.67270975]
+    yawDeg: 0.0
+    pitchDeg: 18.0
+    rollDeg: -2.0
+    convention: opengl
+    focalLength: 19.3
+    focusDistance: 400.0
+    horizontalAperture: 36.0
+    clippingRange: [0.1, 100000.0]
+    width: 480
+    height: 360
+    dataTypes: ["rgb"]
+
+  eyeInHandView:
+    cameraName: eye_in_hand_camera
+    primPath: "{ENV_REGEX_NS}/Robot/link1/eye_in_hand_camera"
+    parent: link1
+    pos: [0.5, 0.0, 1.5]
+    rot: [0.70711, 0.0, 0.0, -0.70711]
+    convention: opengl
+    focalLength: 24.0
+    focusDistance: 400.0
+    horizontalAperture: 27.7
+    clippingRange: [0.1, 100000.0]
+    width: 480
+    height: 360
+    dataTypes: ["rgb"]
+
+  rightShoulderView:
+    cameraName: right_shoulder_camera
+    primPath: "{ENV_REGEX_NS}/Robot/link1/right_shoulder_camera"
+    parent: link1
+    pos: [0.15, -0.9, 1.2]
+    rot: [0.93905, 0.33254, -0.08216, -0.02909]
+    convention: opengl
+    focalLength: 24.0
+    focusDistance: 400.0
+    horizontalAperture: 27.7
+    clippingRange: [0.1, 100000.0]
+    width: 480
+    height: 360
+    dataTypes: ["rgb"]
